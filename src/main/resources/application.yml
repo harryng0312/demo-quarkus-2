@@ -1,21 +1,51 @@
 # build config
 quarkus:
+  http:
+    port: 8080
   package:
     type: uber-jar
     runner-suffix: -all-${quarkus.profile}
     output-name: demo-quarkus2
   profile: dev
-# common config
+  log:
+    console:
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      enable: true
+    file:
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n"
+      enable: true
+      path: ./log/demo.log
+      rotation:
+        file-suffix: .yyyy-MM-dd
+        max-file-size: 50M
+        max-backup-index: 10
+    level: INFO
 
+# common config
+base:
+  baseUrl: "http://localhost:${quarkus.http.port}"
 # profile config
 "%dev":
+  quarkus:
+    log:
+      file:
+        enable: false
+      level: DEBUG
   greeting:
     message: "[DEV] hello"
 
 "%uat":
+  quarkus:
+    log:
+      file:
+        enable: false
   greeting:
     message: "[UAT] hello"
 
 "%prod":
+  quarkus:
+    log:
+      console:
+        enable: false
   greeting:
     message: "[PROD] hello"
