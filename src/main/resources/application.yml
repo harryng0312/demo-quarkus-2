@@ -1,0 +1,21 @@
+# build config
+quarkus:
+  package:
+    type: uber-jar
+    runner-suffix: -all-${quarkus.profile}
+    output-name: demo-quarkus2
+  profile: dev
+# common config
+
+# profile config
+"%dev":
+  greeting:
+    message: "[DEV] hello"
+
+"%uat":
+  greeting:
+    message: "[UAT] hello"
+
+"%prod":
+  greeting:
+    message: "[PROD] hello"
